@@ -8,17 +8,17 @@ Questões de pesquisa respondidas pelos experimentos:
 * Q2: A eficácia dos algoritmos de radicalização é a mesma em todas as coleções judiciais?
 * Q3: A radicalização tem efeito sobre os resultados obtidos mediante as buscas jurisprudenciais?
 
-Dividimos o experimento em 3 fases:
+A experimentação foi divida em 3 fases:
 
 * fase1: experimento de radicalização sobre uma amostra da coleção para saber a eficácia dos algoritmos;
-* fase2: indexar todos os documentos;
-* fase3: efetuar consultas contra a base indexada com todos os documentos;
+* fase2: indexação de todos os documentos no engine de busca;
+* fase3: cálculo das métricas em função de consultas disparadas contra a base indexada com todos os documentos;
 
 Dentro dos diretórios `csv` e `trec` coloquei os arquivos que foram gerados durante a execução do experimento em minha máquina.
 
-## Empacotamento do experimento
+## Empacotamento dos experimentos
 
-Para facilitar a reprodução deste experimento, encapsulamos toda a estrutura necessária dentro de um container Docker. 
+Para facilitar a reprodução destes experimentos, encapsulamos toda a estrutura necessária dentro de um container Docker. 
 
 Ressaltamos que o build levará um certo tempo, pois é feito download da jurisprudência do [Tribunal de Justiça do Estado de Sergipe (coletada em setembro de 2016)](https://osf.io/as8uv/).
 
@@ -40,7 +40,7 @@ docker build -t ranophoenix/radicalizacaojurisprudencial .
 docker run -rm --name radicalizacaojurisprudencial -it ranophoenix/radicalizacaojurisprudencial
 ```
 
-O container irá executar as 3 fases do experimento automaticamente. Ao final, você estará no shell do container e poderá ver os arquivos que foram gerados nos diretórios `/opt/experimentoradicalizacao/trec` e `/opt/experimentoradicalizacao/csv`.
+O container irá executar as 3 fases automaticamente. Ao final, você estará no shell do container e poderá ver os arquivos que foram gerados nos diretórios `/opt/experimentoradicalizacao/trec` e `/opt/experimentoradicalizacao/csv`.
 
 Caso queira, você pode montar esses diretórios no seu host para analisá-los com sua ferramenta preferida. Para tal, basta montar os diretórios por meio de [volumes](https://docs.docker.com/engine/admin/volumes/volumes/).
 
