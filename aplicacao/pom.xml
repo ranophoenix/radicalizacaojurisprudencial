@@ -1,0 +1,79 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+   <modelVersion>4.0.0</modelVersion>
+
+   <groupId>ranophoenix</groupId>
+   <artifactId>radicalizacaojurisprudencial</artifactId>
+   <version>1.0-SNAPSHOT</version>
+   <packaging>jar</packaging>
+
+   <properties>
+     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+     <maven.compiler.source>1.8</maven.compiler.source>
+     <maven.compiler.target>1.8</maven.compiler.target>	 
+   </properties>
+   
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.2.1</version>
+				<configuration>
+					<mainClass>experimento.Main</mainClass>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>   
+
+   <dependencies>
+	<dependency>
+		<groupId>junit</groupId>
+		<artifactId>junit</artifactId>
+		<version>4.12</version>
+		<scope>test</scope>
+	</dependency>
+	<dependency>
+		<groupId>org.freemarker</groupId>
+		<artifactId>freemarker</artifactId>
+		<version>2.3.25-incubating</version>
+		<scope>test</scope>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.lucene</groupId>
+		<artifactId>lucene-core</artifactId>
+		<version>6.2.1</version>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.lucene</groupId>
+		<artifactId>lucene-analyzers-common</artifactId>
+		<version>6.2.1</version>
+	</dependency>	
+	<dependency>
+		<groupId>org.apache.httpcomponents</groupId>
+		<artifactId>httpclient</artifactId>
+		<version>4.4.1</version>
+	</dependency>	
+	<dependency>
+		<groupId>org.apache.solr</groupId>
+		<artifactId>solr-solrj</artifactId>
+		<version>6.2.1</version>
+		  <exclusions>
+			<exclusion>
+			  <groupId>org.codehaus.woodstox</groupId>
+			  <artifactId>stax2-api</artifactId>
+			</exclusion>
+			<exclusion>
+			  <groupId>org.codehaus.woodstox</groupId>
+			  <artifactId>woodstox-core-asl</artifactId>
+			</exclusion>
+			
+		  </exclusions> 		
+	</dependency>	
+	<dependency>
+		<groupId>org.apache.commons</groupId>
+		<artifactId>commons-math3</artifactId>
+		<version>3.6.1</version>
+	</dependency>	
+   </dependencies>
+ </project>
