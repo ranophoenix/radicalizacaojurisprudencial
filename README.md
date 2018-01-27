@@ -44,3 +44,12 @@ O container irá executar as 3 fases automaticamente. Ao final, você estará no
 
 Caso queira, você pode montar esses diretórios no seu host para analisá-los com sua ferramenta preferida. Para tal, basta montar os diretórios por meio de [volumes](https://docs.docker.com/engine/admin/volumes/volumes/).
 
+## Publicações
+
+As seguintes publicações foram frutos deste trabalho:
+
+[Summary Report of Experimental Analysis of Stemming Algorithms Applied to Judicial Jurisprudence](https://link.springer.com/chapter/10.1007/978-3-319-54978-1_120)
+
+[Assessing the Impact of Stemming Algorithms Applied to Judicial Jurisprudence - An Experimental Analysis](http://www.scitepress.org/Papers/2017/63171/index.html)
+
+[Experimental Analysis of Stemming on Jurisprudential Documents Retrieval](http://www.mdpi.com/2078-2489/9/2/28)
