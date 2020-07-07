@@ -2,6 +2,7 @@ package experimento.colecao;
 
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
+import experimento.util.Configuracao;
 
 public class ColecaoSolr {
 	private String nome;
@@ -9,7 +10,7 @@ public class ColecaoSolr {
 
 	public ColecaoSolr(String nome) {
 		this.nome = nome;
-		solrClient = new HttpSolrClient.Builder("http://localhost:8983/solr/" + nome).build();
+		solrClient = new HttpSolrClient.Builder(Configuracao.getPropriedade("SOLR_URL") + nome).build();
 	}
 
 	public String getNome() {

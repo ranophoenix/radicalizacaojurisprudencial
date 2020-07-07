@@ -42,6 +42,8 @@ import freemarker.template.TemplateModel;
 import freemarker.template.TemplateModelException;
 import freemarker.template.utility.DeepUnwrap;
 
+import experimento.util.Configuracao;
+
 public class ReportTest {
 
 	@SuppressWarnings("unchecked")
@@ -77,37 +79,37 @@ public class ReportTest {
 
 	@Test
 	public void gerarRelatorioAsg() throws Exception {
-		TrecQRelFile tqrel = new TrecQRelFile("trec/qrels_asg");
+		TrecQRelFile tqrel = new TrecQRelFile(Configuracao.getPropriedade("TREC_DIR") + "/qrels_asg");
 
 		FreeMarkerReportBuilder report = new FreeMarkerReportBuilder("Coleção ASG", tqrel.getLines());
 		report.comQueries("asg");
 
 		// NoStem
-		TrecQResultFile tqres = new TrecQResultFile("trec/resultados_asg_nostem");
+		TrecQResultFile tqres = new TrecQResultFile(Configuracao.getPropriedade("TREC_DIR") + "/resultados_asg_nostem");
 
 		report.comAlgoritmo("NoStem", tqres.getLines());
 
 		// Porter
-		tqres = new TrecQResultFile("trec/resultados_asg_porter");
+		tqres = new TrecQResultFile(Configuracao.getPropriedade("TREC_DIR") + "/resultados_asg_porter");
 
 		report.comAlgoritmo("Porter", tqres.getLines());
 
 		// RSLP
-		tqres = new TrecQResultFile("trec/resultados_asg_rslp");
+		tqres = new TrecQResultFile(Configuracao.getPropriedade("TREC_DIR") + "/resultados_asg_rslp");
 
 		report.comAlgoritmo("RSLP", tqres.getLines());
 
 		// RSLP-S
-		tqres = new TrecQResultFile("trec/resultados_asg_rslps");
+		tqres = new TrecQResultFile(Configuracao.getPropriedade("TREC_DIR") + "/resultados_asg_rslps");
 
 		report.comAlgoritmo("RSLP-S", tqres.getLines());
 
 		// UniNE
-		tqres = new TrecQResultFile("trec/resultados_asg_unine");
+		tqres = new TrecQResultFile(Configuracao.getPropriedade("TREC_DIR") + "/resultados_asg_unine");
 
 		report.comAlgoritmo("UniNE", tqres.getLines());
 
-		File arquivo = new File("trec/report_asg.html");
+		File arquivo = new File(Configuracao.getPropriedade("TREC_DIR") + "/report_asg.html");
 
 		report.build(arquivo);
 
@@ -141,7 +143,7 @@ public class ReportTest {
 
 			Configuration cfg = new Configuration(Configuration.VERSION_2_3_25);
 			cfg.setDefaultEncoding("ISO-8859-1");
-			cfg.setDirectoryForTemplateLoading(new File("trec"));
+			cfg.setDirectoryForTemplateLoading(new File(Configuracao.getPropriedade("TREC_DIR")));
 			cfg.setAPIBuiltinEnabled(true);
 			Template template = cfg.getTemplate("template_report.ftl");
 
@@ -172,7 +174,7 @@ public class ReportTest {
 		}
 
 		public FreeMarkerReportBuilder comQueries(String nomeColecao) {
-			TQueryFile consultas = new TQueryFile("queries/" + nomeColecao + ".xml");
+			TQueryFile consultas = new TQueryFile(Configuracao.getPropriedade("QUERIES_DIR") + "/" + nomeColecao + ".xml");
 
 			consultas.getLines().forEach(q -> {
 				root.put("q" + q.getQid(), q.getQuery());

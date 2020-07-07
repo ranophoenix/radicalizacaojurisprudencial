@@ -20,6 +20,7 @@ import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
 import experimento.ExperimentoException;
+import experimento.util.Configuracao;
 
 public class LeitorXMLFeeder {
 	private Colecao colecao;
@@ -30,7 +31,7 @@ public class LeitorXMLFeeder {
 	}
 
 	public void processar(Consumer<Documento> callback) throws ExperimentoException {
-		try (DirectoryStream<Path> dirStream = Files.newDirectoryStream(Paths.get("feeders/" + colecao.getAlias()), "*.xml")) {
+		try (DirectoryStream<Path> dirStream = Files.newDirectoryStream(Paths.get(Configuracao.getPropriedade("FEEDERS_DIR") + "/" + colecao.getAlias()), "*.xml")) {
 			dirStream.forEach(path -> readXML(path, callback));
 		} catch (IOException e) {
 			throw new ExperimentoException("Erro ao ler XML.", e);

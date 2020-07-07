@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import experimento.ExperimentoException;
+import experimento.util.Configuracao;
 
 public class CSVFile implements Closeable {
 	private FileWriter writer;
@@ -16,11 +17,11 @@ public class CSVFile implements Closeable {
 
 	public CSVFile(String file, String header) throws ExperimentoException {
 		try {
-			File csvDir = new File("csv");
+			File csvDir = new File(Configuracao.getPropriedade("CSV_DIR"));
 			if (!csvDir.exists()) {
 				csvDir.mkdir();
 			}
-			writer = new FileWriter("csv/" + file + ".csv");
+			writer = new FileWriter(Configuracao.getPropriedade("CSV_DIR") + "/" + file + ".csv");
 			if (header != null) {
 				writer.write(header + "\n");
 			}

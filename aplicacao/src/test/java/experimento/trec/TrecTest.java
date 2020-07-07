@@ -14,26 +14,27 @@ import experimento.trec.metric.TPrec10;
 import experimento.trec.metric.TPrecR;
 import experimento.trec.metric.TrecMetric;
 import experimento.util.Util;
+import experimento.util.Configuracao;
 
 public class TrecTest {
 	@Test
 	public void testarCargaDeQrel() {
-		TrecQRelFile tqrel = new TrecQRelFile("trec/qrels.test");
+		TrecQRelFile tqrel = new TrecQRelFile(Configuracao.getPropriedade("TREC_DIR") + "/qrels.test");
 
 		assertEquals(3681, tqrel.getLines().size());
 	}
 
 	@Test
 	public void testarCargaDeQresult() {
-		TrecQResultFile tqres = new TrecQResultFile("trec/results.test");
+		TrecQResultFile tqres = new TrecQResultFile(Configuracao.getPropriedade("TREC_DIR") + "/results.test");
 
 		assertEquals(1500, tqres.getLines().size());
 	}
 
 	@Test
 	public void testarPrec10() {
-		TrecQRelFile tqrel = new TrecQRelFile("trec/qrels.test");
-		TrecQResultFile tqres = new TrecQResultFile("trec/results.test");
+		TrecQRelFile tqrel = new TrecQRelFile(Configuracao.getPropriedade("TREC_DIR") + "/qrels.test");
+		TrecQResultFile tqres = new TrecQResultFile(Configuracao.getPropriedade("TREC_DIR") + "/results.test");
 
 		TrecMetric p10 = new TPrec10(tqrel.getLines(), tqres.getLines());
 
@@ -46,8 +47,8 @@ public class TrecTest {
 
 	@Test
 	public void testarPrecR() {
-		TrecQRelFile tqrel = new TrecQRelFile("trec/qrels.test");
-		TrecQResultFile tqres = new TrecQResultFile("trec/results.test");
+		TrecQRelFile tqrel = new TrecQRelFile(Configuracao.getPropriedade("TREC_DIR") + "/qrels.test");
+		TrecQResultFile tqres = new TrecQResultFile(Configuracao.getPropriedade("TREC_DIR") + "/results.test");
 
 		TrecMetric pR = new TPrecR(tqrel.getLines(), tqres.getLines());
 
@@ -60,8 +61,8 @@ public class TrecTest {
 
 	@Test
 	public void testarMap() {
-		TrecQRelFile tqrel = new TrecQRelFile("trec/qrels.test");
-		TrecQResultFile tqres = new TrecQResultFile("trec/results.test");
+		TrecQRelFile tqrel = new TrecQRelFile(Configuracao.getPropriedade("TREC_DIR") + "/qrels.test");
+		TrecQResultFile tqres = new TrecQResultFile(Configuracao.getPropriedade("TREC_DIR") + "/results.test");
 
 		TrecMetric pMap = new TMap(tqrel.getLines(), tqres.getLines());
 
@@ -95,8 +96,8 @@ public class TrecTest {
 		
 		TrecQRelSet relevantes = judgement.getRelevants();		
 		
-		Util.salvarResultados("trec/resultados_trectest", resultados);
-		relevantes.export("trec/qrels_trectest");
+		Util.salvarResultados(Configuracao.getPropriedade("TREC_DIR") + "/resultados_trectest", resultados);
+		relevantes.export(Configuracao.getPropriedade("TREC_DIR") + "/qrels_trectest");
 		
 		TMap map = new TMap(relevantes, noStemResult);
 		TPrec10 prec10 = new TPrec10(relevantes, noStemResult);
@@ -118,17 +119,17 @@ public class TrecTest {
 	
 	@Test
 	public void carregarQuery() {
-		TQueryFile queries = new TQueryFile("queries/asg.xml");
+		TQueryFile queries = new TQueryFile(Configuracao.getPropriedade("QUERIES_DIR") + "/asg.xml");
 		
 		assertEquals(100, queries.getLines().size());
 	}
 	
 	@Test
 	public void testarMetricasAsg() {
-		TrecQRelFile tqrel = new TrecQRelFile("trec/qrels_asg");
+		TrecQRelFile tqrel = new TrecQRelFile(Configuracao.getPropriedade("TREC_DIR") + "/qrels_asg");
 		
 		//NoStem
-		TrecQResultFile tqres = new TrecQResultFile("trec/resultados_asg_nostem");
+		TrecQResultFile tqres = new TrecQResultFile(Configuracao.getPropriedade("TREC_DIR") + "/resultados_asg_nostem");
 		TrecMetric metrica = new TMap(tqrel.getLines(), tqres.getLines());
 		assertEquals(0.8367, Util.truncarDouble(metrica.getAll(), 4), 0.00001);
 		metrica = new TPrecR(tqrel.getLines(), tqres.getLines());
@@ -137,7 +138,7 @@ public class TrecTest {
 		assertEquals(0.8380, Util.truncarDouble(metrica.getAll(), 4), 0.00001);
 		
 		//Porter
-		tqres = new TrecQResultFile("trec/resultados_asg_porter");
+		tqres = new TrecQResultFile(Configuracao.getPropriedade("TREC_DIR") + "/resultados_asg_porter");
 		metrica = new TMap(tqrel.getLines(), tqres.getLines());
 		assertEquals(0.7640, Util.truncarDouble(metrica.getAll(), 4), 0.00001);
 		metrica = new TPrecR(tqrel.getLines(), tqres.getLines());
@@ -146,7 +147,7 @@ public class TrecTest {
 		assertEquals(0.7200, Util.truncarDouble(metrica.getAll(), 4), 0.00001);
 
 		//RSLP
-		tqres = new TrecQResultFile("trec/resultados_asg_rslp");
+		tqres = new TrecQResultFile(Configuracao.getPropriedade("TREC_DIR") + "/resultados_asg_rslp");
 		metrica = new TMap(tqrel.getLines(), tqres.getLines());
 		assertEquals(0.6394, Util.truncarDouble(metrica.getAll(), 4), 0.00001);
 		metrica = new TPrecR(tqrel.getLines(), tqres.getLines());
@@ -155,7 +156,7 @@ public class TrecTest {
 		assertEquals(0.5730, Util.truncarDouble(metrica.getAll(), 4), 0.00001);
 
 		//RSLP-S
-		tqres = new TrecQResultFile("trec/resultados_asg_rslps");
+		tqres = new TrecQResultFile(Configuracao.getPropriedade("TREC_DIR") + "/resultados_asg_rslps");
 		metrica = new TMap(tqrel.getLines(), tqres.getLines());
 		assertEquals(0.8152, Util.truncarDouble(metrica.getAll(), 4), 0.00001);
 		metrica = new TPrecR(tqrel.getLines(), tqres.getLines());
@@ -164,7 +165,7 @@ public class TrecTest {
 		assertEquals(0.7930, Util.truncarDouble(metrica.getAll(), 4), 0.00001);
 		
 		//UniNE
-		tqres = new TrecQResultFile("trec/resultados_asg_unine");
+		tqres = new TrecQResultFile(Configuracao.getPropriedade("TREC_DIR") + "/resultados_asg_unine");
 		metrica = new TMap(tqrel.getLines(), tqres.getLines());
 		assertEquals(0.7861, Util.truncarDouble(metrica.getAll(), 4), 0.00001);
 		metrica = new TPrecR(tqrel.getLines(), tqres.getLines());
@@ -176,10 +177,10 @@ public class TrecTest {
 	
 	@Test
 	public void testarMetricasDsg() {
-		TrecQRelFile tqrel = new TrecQRelFile("trec/qrels_dsg");
+		TrecQRelFile tqrel = new TrecQRelFile(Configuracao.getPropriedade("TREC_DIR") + "/qrels_dsg");
 		
 		//NoStem
-		TrecQResultFile tqres = new TrecQResultFile("trec/resultados_dsg_nostem");
+		TrecQResultFile tqres = new TrecQResultFile(Configuracao.getPropriedade("TREC_DIR") + "/resultados_dsg_nostem");
 		TrecMetric metrica = new TMap(tqrel.getLines(), tqres.getLines());
 		assertEquals(0.8935, Util.truncarDouble(metrica.getAll(), 4), 0.00001);
 		metrica = new TPrecR(tqrel.getLines(), tqres.getLines());
@@ -188,7 +189,7 @@ public class TrecTest {
 		assertEquals(0.7870, Util.truncarDouble(metrica.getAll(), 4), 0.00001);
 		
 		//Porter
-		tqres = new TrecQResultFile("trec/resultados_dsg_porter");
+		tqres = new TrecQResultFile(Configuracao.getPropriedade("TREC_DIR") + "/resultados_dsg_porter");
 		metrica = new TMap(tqrel.getLines(), tqres.getLines());
 		assertEquals(0.8010, Util.truncarDouble(metrica.getAll(), 4), 0.00001);
 		metrica = new TPrecR(tqrel.getLines(), tqres.getLines());
@@ -197,7 +198,7 @@ public class TrecTest {
 		assertEquals(0.7030, Util.truncarDouble(metrica.getAll(), 4), 0.00001);
 
 		//RSLP
-		tqres = new TrecQResultFile("trec/resultados_dsg_rslp");
+		tqres = new TrecQResultFile(Configuracao.getPropriedade("TREC_DIR") + "/resultados_dsg_rslp");
 		metrica = new TMap(tqrel.getLines(), tqres.getLines());
 		assertEquals(0.7141, Util.truncarDouble(metrica.getAll(), 4), 0.00001);
 		metrica = new TPrecR(tqrel.getLines(), tqres.getLines());
@@ -206,7 +207,7 @@ public class TrecTest {
 		assertEquals(0.6100, Util.truncarDouble(metrica.getAll(), 4), 0.00001);
 
 		//RSLP-S
-		tqres = new TrecQResultFile("trec/resultados_dsg_rslps");
+		tqres = new TrecQResultFile(Configuracao.getPropriedade("TREC_DIR") + "/resultados_dsg_rslps");
 		metrica = new TMap(tqrel.getLines(), tqres.getLines());
 		assertEquals(0.8589, Util.truncarDouble(metrica.getAll(), 4), 0.00001);
 		metrica = new TPrecR(tqrel.getLines(), tqres.getLines());
@@ -215,7 +216,7 @@ public class TrecTest {
 		assertEquals(0.7500, Util.truncarDouble(metrica.getAll(), 4), 0.00001);
 		
 		//UniNE
-		tqres = new TrecQResultFile("trec/resultados_dsg_unine");
+		tqres = new TrecQResultFile(Configuracao.getPropriedade("TREC_DIR") + "/resultados_dsg_unine");
 		metrica = new TMap(tqrel.getLines(), tqres.getLines());
 		assertEquals(0.8803, Util.truncarDouble(metrica.getAll(), 4), 0.00001);
 		metrica = new TPrecR(tqrel.getLines(), tqres.getLines());
@@ -227,10 +228,10 @@ public class TrecTest {
 	
 	@Test
 	public void testarMetricasAtr() {
-		TrecQRelFile tqrel = new TrecQRelFile("trec/qrels_atr");
+		TrecQRelFile tqrel = new TrecQRelFile(Configuracao.getPropriedade("TREC_DIR") + "/qrels_atr");
 		
 		//NoStem
-		TrecQResultFile tqres = new TrecQResultFile("trec/resultados_atr_nostem");
+		TrecQResultFile tqres = new TrecQResultFile(Configuracao.getPropriedade("TREC_DIR") + "/resultados_atr_nostem");
 		TrecMetric metrica = new TMap(tqrel.getLines(), tqres.getLines());
 		assertEquals(0.7718, Util.truncarDouble(metrica.getAll(), 4), 0.00001);
 		metrica = new TPrecR(tqrel.getLines(), tqres.getLines());
@@ -239,7 +240,7 @@ public class TrecTest {
 		assertEquals(0.7090, Util.truncarDouble(metrica.getAll(), 4), 0.00001);
 		
 		//Porter
-		tqres = new TrecQResultFile("trec/resultados_atr_porter");
+		tqres = new TrecQResultFile(Configuracao.getPropriedade("TREC_DIR") + "/resultados_atr_porter");
 		metrica = new TMap(tqrel.getLines(), tqres.getLines());
 		assertEquals(0.7444, Util.truncarDouble(metrica.getAll(), 4), 0.00001);
 		metrica = new TPrecR(tqrel.getLines(), tqres.getLines());
@@ -248,7 +249,7 @@ public class TrecTest {
 		assertEquals(0.6540, Util.truncarDouble(metrica.getAll(), 4), 0.00001);
 
 		//RSLP
-		tqres = new TrecQResultFile("trec/resultados_atr_rslp");
+		tqres = new TrecQResultFile(Configuracao.getPropriedade("TREC_DIR") + "/resultados_atr_rslp");
 		metrica = new TMap(tqrel.getLines(), tqres.getLines());
 		assertEquals(0.7242, Util.truncarDouble(metrica.getAll(), 4), 0.00001);
 		metrica = new TPrecR(tqrel.getLines(), tqres.getLines());
@@ -257,7 +258,7 @@ public class TrecTest {
 		assertEquals(0.6150, Util.truncarDouble(metrica.getAll(), 4), 0.00001);
 
 		//RSLP-S
-		tqres = new TrecQResultFile("trec/resultados_atr_rslps");
+		tqres = new TrecQResultFile(Configuracao.getPropriedade("TREC_DIR") + "/resultados_atr_rslps");
 		metrica = new TMap(tqrel.getLines(), tqres.getLines());
 		assertEquals(0.7972, Util.truncarDouble(metrica.getAll(), 4), 0.00001);
 		metrica = new TPrecR(tqrel.getLines(), tqres.getLines());
@@ -266,7 +267,7 @@ public class TrecTest {
 		assertEquals(0.7170, Util.truncarDouble(metrica.getAll(), 4), 0.00001);
 		
 		//UniNE
-		tqres = new TrecQResultFile("trec/resultados_atr_unine");
+		tqres = new TrecQResultFile(Configuracao.getPropriedade("TREC_DIR") + "/resultados_atr_unine");
 		metrica = new TMap(tqrel.getLines(), tqres.getLines());
 		assertEquals(0.8247, Util.truncarDouble(metrica.getAll(), 4), 0.00001);
 		metrica = new TPrecR(tqrel.getLines(), tqres.getLines());
@@ -279,7 +280,7 @@ public class TrecTest {
 
 	@Test
 	public void testarMetricasDtr() {
-		TrecQRelFile tqrel = new TrecQRelFile("trec/qrels_dtr");
+		TrecQRelFile tqrel = new TrecQRelFile(Configuracao.getPropriedade("TREC_DIR") + "/qrels_dtr");
 		
 		//NoStem
 		TrecQResultFile tqres = new TrecQResultFile("trec/resultados_dtr_nostem");
@@ -291,7 +292,7 @@ public class TrecTest {
 		assertEquals(0.8130, Util.truncarDouble(metrica.getAll(), 4), 0.00001);
 		
 		//Porter
-		tqres = new TrecQResultFile("trec/resultados_dtr_porter");
+		tqres = new TrecQResultFile(Configuracao.getPropriedade("TREC_DIR") + "/resultados_dtr_porter");
 		metrica = new TMap(tqrel.getLines(), tqres.getLines());
 		assertEquals(0.8652, Util.truncarDouble(metrica.getAll(), 4), 0.00001);
 		metrica = new TPrecR(tqrel.getLines(), tqres.getLines());
@@ -300,7 +301,7 @@ public class TrecTest {
 		assertEquals(0.7790, Util.truncarDouble(metrica.getAll(), 4), 0.00001);
 
 		//RSLP
-		tqres = new TrecQResultFile("trec/resultados_dtr_rslp");
+		tqres = new TrecQResultFile(Configuracao.getPropriedade("TREC_DIR") + "/resultados_dtr_rslp");
 		metrica = new TMap(tqrel.getLines(), tqres.getLines());
 		assertEquals(0.7668, Util.truncarDouble(metrica.getAll(), 4), 0.00001);
 		metrica = new TPrecR(tqrel.getLines(), tqres.getLines());
@@ -309,7 +310,7 @@ public class TrecTest {
 		assertEquals(0.6750, Util.truncarDouble(metrica.getAll(), 4), 0.00001);
 
 		//RSLP-S
-		tqres = new TrecQResultFile("trec/resultados_dtr_rslps");
+		tqres = new TrecQResultFile(Configuracao.getPropriedade("TREC_DIR") + "/resultados_dtr_rslps");
 		metrica = new TMap(tqrel.getLines(), tqres.getLines());
 		assertEquals(0.8716, Util.truncarDouble(metrica.getAll(), 4), 0.00001);
 		metrica = new TPrecR(tqrel.getLines(), tqres.getLines());
@@ -318,7 +319,7 @@ public class TrecTest {
 		assertEquals(0.7880, Util.truncarDouble(metrica.getAll(), 4), 0.00001);
 		
 		//UniNE
-		tqres = new TrecQResultFile("trec/resultados_dtr_unine");
+		tqres = new TrecQResultFile(Configuracao.getPropriedade("TREC_DIR") + "/resultados_dtr_unine");
 		metrica = new TMap(tqrel.getLines(), tqres.getLines());
 		assertEquals(0.8553, Util.truncarDouble(metrica.getAll(), 4), 0.00001);
 		metrica = new TPrecR(tqrel.getLines(), tqres.getLines());

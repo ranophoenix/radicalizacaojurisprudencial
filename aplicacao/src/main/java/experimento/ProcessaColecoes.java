@@ -25,6 +25,7 @@ import experimento.trec.metric.TrecMetric;
 import experimento.util.ExtratorDeAmostra;
 import experimento.util.ExtratorDeAmostraTermosUnicos;
 import experimento.util.Util;
+import experimento.util.Configuracao;
 
 public class ProcessaColecoes {
 	private List<Colecao> colecoes = new ArrayList<Colecao>();
@@ -54,7 +55,7 @@ public class ProcessaColecoes {
 	public void processarFase3() {
 		processar(colecao -> {
 			Map<String, TrecQResultSet> resultados = new LinkedHashMap<>();
-			TQueryFile consultas = new TQueryFile("queries/" + colecao.getAlias() + ".xml");
+			TQueryFile consultas = new TQueryFile(Configuracao.getPropriedade("QUERIES_DIR") + "/" + colecao.getAlias() + ".xml");
 			for (ColecaoSolr colSolr : colecao.getColecoesSolr()) {
 				TrecQResultSet resultadoConsulta = new TrecQResultSet();
 				for (TrecQuery consulta : consultas.getLines()) {
@@ -72,16 +73,16 @@ public class ProcessaColecoes {
 			
 			TrecQRelSet relevantes = juiz.getRelevants();
 			
-			Util.salvarResultados("trec/resultados", resultados);
-			relevantes.export("trec/qrels_" + colecao.getAlias());
+			Util.salvarResultados(Configuracao.getPropriedade("TREC_DIR") + "/resultados", resultados);
+			relevantes.export(Configuracao.getPropriedade("TREC_DIR") + "/qrels_" + colecao.getAlias());
 			
 			for (ColecaoSolr colSolr : colecao.getColecoesSolr()) {
 				TrecMetric metrica = new TMap(relevantes, resultados.get(colSolr.getNome()));
-				metrica.export("csv/" + colSolr.getNome() + "_map.csv");
+				metrica.export(Configuracao.getPropriedade("CSV_DIR") + "/" + colSolr.getNome() + "_map.csv");
 				metrica = new TPrecR(relevantes, resultados.get(colSolr.getNome()));
-				metrica.export("csv/" + colSolr.getNome() + "_precR.csv");
+				metrica.export(Configuracao.getPropriedade("CSV_DIR") + "/" + colSolr.getNome() + "_precR.csv");
 				metrica = new TPrec10(relevantes, resultados.get(colSolr.getNome()));
-				metrica.export("csv/" + colSolr.getNome() + "_p10.csv");
+				metrica.export(Configuracao.getPropriedade("CSV_DIR") + "/" + colSolr.getNome() + "_p10.csv");
 			}
 						
 		});
