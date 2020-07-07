@@ -26,9 +26,6 @@ hs_err_pid*
 .ipynb_checkpoints
 __pycache__
 
-#data cores of solr
-solr_cores/*/data
-
 # xml feeders
 feeders/*/*.xml
 aplicacao/target
