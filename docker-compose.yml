@@ -1,0 +1,54 @@
+version: '3'
+services:
+  solr:
+    image: solr:7
+    ports:
+     - "8983:8983"
+    volumes:
+      - ./solr_cores:/opt/solr/server/solr/cores
+    command:
+      - solr-precreate
+  asg:
+    image: maven:3.6.3-jdk-8
+    working_dir: /opt/experimentoradicalizacao
+    environment:
+     - FASE_EXPERIMENTO=todas
+     - COLECAO_EXPERIMENTO=asg
+    volumes:
+      - .:/opt/experimentoradicalizacao
+    command: ['./entrada.sh']
+    depends_on: 
+      - solr
+  dsg:
+    image: maven:3.6.3-jdk-8
+    working_dir: /opt/experimentoradicalizacao
+    environment:
+     - FASE_EXPERIMENTO=todas
+     - COLECAO_EXPERIMENTO=dsg
+    volumes:
+      - .:/opt/experimentoradicalizacao
+    command: ['./entrada.sh']
+    depends_on: 
+      - solr
+  atr:
+    image: maven:3.6.3-jdk-8
+    working_dir: /opt/experimentoradicalizacao
+    environment:
+     - FASE_EXPERIMENTO=todas
+     - COLECAO_EXPERIMENTO=atr
+    volumes:
+      - .:/opt/experimentoradicalizacao
+    command: ['./entrada.sh']
+    depends_on: 
+      - solr
+  dtr:
+    image: maven:3.6.3-jdk-8
+    working_dir: /opt/experimentoradicalizacao
+    environment:
+     - FASE_EXPERIMENTO=todas
+     - COLECAO_EXPERIMENTO=dtr
+    volumes:
+      - .:/opt/experimentoradicalizacao
+    command: ['./entrada.sh']
+    depends_on: 
+      - solr
