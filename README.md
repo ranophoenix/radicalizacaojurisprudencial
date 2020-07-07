@@ -28,21 +28,13 @@ Ressaltamos que o build levará um certo tempo, pois é feito download da jurisp
 git clone https://github.com/ranophoenix/radicalizacaojurisprudencial.git
 ```
 
-2. Entre no diretório `radicalizacaojurisprudencial` e execute um build:
+2. Entre no diretório `radicalizacaojurisprudencial` e execute:
 
 ```
-docker build -t ranophoenix/radicalizacaojurisprudencial .
+docker compose up
 ```
 
-3. Ainda dentro do diretório, execute o container:
-
-```
-docker run -rm --name radicalizacaojurisprudencial -it ranophoenix/radicalizacaojurisprudencial
-```
-
-O container irá executar as 3 fases automaticamente. Ao final, você estará no shell do container e poderá ver os arquivos que foram gerados nos diretórios `/opt/experimentoradicalizacao/trec` e `/opt/experimentoradicalizacao/csv`.
-
-Caso queira, você pode montar esses diretórios no seu host para analisá-los com sua ferramenta preferida. Para tal, basta montar os diretórios por meio de [volumes](https://docs.docker.com/engine/admin/volumes/volumes/).
+O container irá executar as 3 fases automaticamente. Ao final, você poderá ver os arquivos que foram gerados nos diretórios `trec` e `csv`.
 
 ## Publicações
 
